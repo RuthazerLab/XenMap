@@ -11,9 +11,11 @@ Displays 3D phase map and calculates map gradient vector
 plotstyle = 1;      %1 = surface, 2 = scatter
 nsamples = 5000;    %for scatter plot: number of points to show
 markersize = 2;     %for scatter plot: size of markers
-plotline = 1;       %
+plotline = 1;       %plot gradient axis line
 linecolor = [0,0,0];
 linetype = '-'; 
+
+imgxflip = 1;       %lr flip images
 
 %% ---end of user parameters---
 
@@ -226,6 +228,9 @@ end
 
 set(gca,'Zdir','reverse');
 set(gca, 'YDir','reverse');
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 
 colormap(jet);
 caxis(clims);
@@ -239,8 +244,6 @@ xlim(axislims.x);
 ylim(axislims.y);
 zlim(axislims.z);
 
-% xlim([80,260]);
-% ylim([40,220]);
 xlim([1,256]);
 ylim([1,256]);
 
@@ -248,14 +251,17 @@ zlim(axislims.z);
 
 
 set(gca,'box','on','linewidth',1.5);
-view(-48,8);
-view(78,14)
-%view(67,32)
-%view(55,29)
+
+if imgxflip
+    view(-11,10)
+else
+    view(78,14)
+end
+
 grid off;
 hold off;
 
 gradvector = [sumx sumy sumz_corr];
-set(gca,'DataAspectRatio',[1 1 1])
+%set(gca,'DataAspectRatio',[1 1 1])
 
 disp(['Gradient vector: (' num2str(sumx) ' ' num2str(sumy) ' ' num2str(sumz_corr) ')'])

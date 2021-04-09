@@ -16,6 +16,7 @@ nsamples = 5000;    %number of sample points to show on map
 rthres = 2;         %threshold for peak response amplitude (exclude points with peak response below threshold)
 nsamples_cdf = 200; %number of sample points to show on cumulative distribution plot
 
+imgxflip = 1;       %lr flip images
 
 %% ---end of user parameters---
 
@@ -170,7 +171,9 @@ set(ax1,'units','pixels');
 set(ax1, 'position', [0 0 w_pos(3) w_pos(4)]);
 imagesc(stdadjust);
 colormap(ax1,gray);
-set(gca, 'XDir','reverse');
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 
 ax2 = axes;
 set(ax2,'Color','none','visible','off');
@@ -180,7 +183,9 @@ set(ax2, 'position', [0 0 w_pos(3) w_pos(4)]);
 scatter(sampleindsx,sampleindsy,8,sample_mratio,'filled');
 axis off;
 set(gca, 'YDir','reverse');
-set(gca, 'XDir','reverse');
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 xlim([0,512]);
 ylim([0,512]);
 caxis([0.8,1.4]);

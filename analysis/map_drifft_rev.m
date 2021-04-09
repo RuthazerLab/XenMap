@@ -27,6 +27,7 @@ driftBlank = 10;    %time drifting bar stimulus is off screen during each cycle
 
 register = 1;   %0=none / 1=use Matlab default / 2=use nonrigid registration from NoRMCorre / 3=use rigid registration from NoRMCorre
 
+imgxflip = 1;       %lr flip images
 
 %% ---end of user parameters---
 
@@ -129,4 +130,6 @@ map_sub = (phasemap1 - phasemap2 - pblank*2*pi) ./2;
 
 img2 = drawMap(2,map_sub,snrmap,clims,[512 512]);
 set(img2,'name','Phase map','position',[100 200 512 512]);
-set(gca,'xdir','reverse')
+if imgxflip
+    set(gca, 'XDir','reverse');
+end

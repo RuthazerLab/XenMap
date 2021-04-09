@@ -32,6 +32,7 @@ dist = 3;           %frame distance between bins subtracted for first differenti
 
 writename = '';     %name of output data file
 
+
 %% ---end of user parameters---
 
 fid = fopen(filename,'r','l');

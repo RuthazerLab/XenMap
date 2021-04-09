@@ -13,7 +13,7 @@ version)
 gaussfilt = 3;         %perform Gaussian filter on both maps before comparing
 dobootstrap = 1000;    %perform bootstrap with scrambled image (set #iterations)
 
-
+imgxflip = 1;       %lr flip images
 
 %% ---end of user parameters---
 
@@ -51,12 +51,16 @@ cmplum = fullmask;
 %display map 1: phase map
 img1 = drawMap(1,map_sub,snrmap,clims,[512 512]);
 set(img1,'name','Phase map','position',[100 200 512 512]);
-set(gca,'xdir','reverse')
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 
 %display map 2: grid map
 img2 = drawMapFlash(2,pixelmap,cmplum,flipcmap,clims,[512 512]);
 set(img2,'name','Grid map','position',[150 250 512 512]);
-set(gca,'xdir','reverse')
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 
 %adjust grid map values to match phase map range
 cmpmap = 6-cmpmap;
@@ -139,7 +143,9 @@ diff3score = nanmean(nanmean(diff3));
  title('Target');
  colormap jet;
  caxis(clims);
- set(gca,'xdir','reverse')
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
  text(500,480,'Phase map','Color','w');
  axis off;
  
@@ -147,7 +153,9 @@ diff3score = nanmean(nanmean(diff3));
  imagesc(cmpmap);
  title('Compare');
  caxis(clims);
- set(gca,'xdir','reverse')
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
  text(500,480,'Grid map','Color','w');
  axis off;
  
@@ -155,7 +163,9 @@ diff3score = nanmean(nanmean(diff3));
  imagesc(diff1);
  title('Difference');
  caxis([-0.2 1.5]);
- set(gca,'xdir','reverse')
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
  text(500,480,['Diff score: ' num2str(diff1score)],'Color','w');
  axis off;
  
@@ -163,21 +173,27 @@ diff3score = nanmean(nanmean(diff3));
  imagesc(tgtmap);
  colormap jet;
  caxis(clims);
- set(gca,'xdir','reverse')
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
  text(500,480,'Phase map','Color','w');
  axis off;
 
  subtightplot(2,3,5);
  imagesc(shuffledmap);
  caxis(clims);
- set(gca,'xdir','reverse')
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
  text(500,480,'Scrambled Phase','Color','w');
  axis off;
  
  subtightplot(2,3,6);
  imagesc(diff3);
  caxis([-0.2 1.5]);
- set(gca,'xdir','reverse')
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
  text(500,480,['Diff score: ' num2str(diff3score)],'Color','w');
  axis off;
 

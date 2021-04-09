@@ -23,6 +23,7 @@ snrthres = 1 ;          %SNR threshold
 nneighbors = 20;        %least number of neighboring pixels (exclude pixels with insufficient #neighbors after thresholding for SNR)
 nsamples = 5000;      	%number of pixels to sample
 
+imgxflip = 1;       %lr flip images
 
 %% ---end of user parameters---
 
@@ -123,7 +124,9 @@ ylabel('Discontinuity');
 
 subtightplot(2,2,1,0.1);
 imagesc(maskedmap);
-set(gca, 'XDir','reverse');
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 axis off;
 colorbar;
 caxis(clims);
@@ -133,7 +136,9 @@ title('Phase map')
 subtightplot(2,2,2,0.1)
 scatter(sampleindsx,sampleindsy,2,vfdists,'filled');
 set(gca, 'YDir','reverse');
-set(gca, 'XDir','reverse');
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 title('Discontinuity distribution');
 xlim([0,512]);
 ylim([0,512]);

@@ -13,6 +13,7 @@ response to the remaining stimulus positions in the periphery)
 %% user parameters
 
 cellrthres = 2; %threshold for peak response amplitude (exclude cells with peak response below threshold)
+imgxflip = 1;       %lr flip images
 
 
 %% ---end of user parameters---
@@ -217,7 +218,9 @@ if flipcmap
 else
     colormap(jet);
 end
-set(gca, 'XDir','reverse');
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 
 
 %figure 2: show cell avg stim position map
@@ -231,7 +234,9 @@ set(ax1,'units','pixels');
 set(ax1, 'position', [0 0 w_pos(3) w_pos(4)]);
 imagesc(stdadjust);
 colormap(ax1,gray);
-set(gca, 'XDir','reverse');
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 
 ax2 = axes;
 set(ax2,'Color','none','visible','off');
@@ -246,7 +251,9 @@ else
     colormap(ax2,jet);
 end
 axis off;
-set(gca, 'XDir','reverse');
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 
 
 
@@ -262,7 +269,9 @@ set(ax1, 'position', [0 0 w_pos(3) w_pos(4)]);
 ax1_pos = ax1.Position;
 meanimg = imagesc(stdadjust);
 colormap(ax1,gray);
-set(gca, 'XDir','reverse');
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 
 ax2 = axes;
 set(ax2,'Color','none','visible','off');
@@ -274,7 +283,10 @@ cellmapimg.AlphaDataMapping = 'scaled';
 colormap(ax2,hot);
 caxis([0.8,1.4]);
 axis off;
-set(gca, 'XDir','reverse');
+
+if imgxflip
+    set(gca, 'XDir','reverse');
+end
 
 
 
