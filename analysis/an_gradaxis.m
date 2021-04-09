@@ -9,7 +9,7 @@ Displays 3D phase map and calculates map gradient vector
 %% user parameters
 
 plotstyle = 1;      %1 = surface, 2 = scatter
-nsamples = 5000;    %for scatter plot: number of points to show
+nsamples = 1000;    %for scatter plot: number of points to show
 markersize = 2;     %for scatter plot: size of markers
 plotline = 1;       %plot gradient axis line
 linecolor = [0,0,0];
@@ -132,7 +132,8 @@ for j=1:length(map1list)
             scatterZ = (ones(1,length(scatterinds))*crtslice + length(goslice)*(j-1)) * stepsize * pixelrat;
             
             map_trans = transpose(map_sub);
-            scatterC = crtslicemap(scatterinds);
+            scatterC = map_trans(scatterinds);
+            %scatterC = crtslicemap(scatterinds);
             if nslices == 1
                 writeslice = 1;
             else
