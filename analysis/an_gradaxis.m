@@ -8,14 +8,16 @@ Displays 3D phase map and calculates map gradient vector
 
 %% user parameters
 
-plotstyle = 1;      %1 = surface, 2 = scatter
+plotstyle = 2;      %1 = surface, 2 = scatter
 nsamples = 1000;    %for scatter plot: number of points to show
 markersize = 2;     %for scatter plot: size of markers
 plotline = 1;       %plot gradient axis line
 linecolor = [0,0,0];
 linetype = '-'; 
 
+DataAspect = [1 1 0.8]; %plot aspect ratio (slightly stretch z axis for better view of slices)
 imgxflip = 1;       %lr flip images
+
 
 %% ---end of user parameters---
 
@@ -129,7 +131,7 @@ for j=1:length(map1list)
 
             
             [scatterX,scatterY] = ind2sub([imgwidth,imgheight],scatterinds);
-            scatterZ = (ones(1,length(scatterinds))*crtslice + length(goslice)*(j-1)) * stepsize * pixelrat;
+            scatterZ = (ones(1,length(scatterinds))*(crtslice-1) + length(goslice)*(j-1)) * stepsize * pixelrat;
             
             map_trans = transpose(map_sub);
             scatterC = map_trans(scatterinds);
@@ -214,9 +216,8 @@ if plotstyle == 1  %surf plots
 else %scatter plots
     
     [X,Y,Z] = meshgrid(imgwidth,imgheight,imgdepth);
-    scatter3(scatterXcache{1},scatterYcache{1},scatterZcache{1},markersize,scatterCcache{1},'filled');
     hold on;
-    for crtslice = 2:nslices
+    for crtslice = 2:nslices+1
         scatter3(scatterXcache{crtslice},scatterYcache{crtslice},scatterZcache{crtslice},markersize,scatterCcache{crtslice},'filled');
     end   
     xlim([0,imgwidth]);
@@ -247,8 +248,10 @@ zlim(axislims.z);
 
 xlim([1,256]);
 ylim([1,256]);
-
 zlim(axislims.z);
+
+zticks([0,50,100,150]);
+zticklabels({'30','80','130','180'});
 
 
 set(gca,'box','on','linewidth',1.5);
@@ -263,6 +266,10 @@ grid off;
 hold off;
 
 gradvector = [sumx sumy sumz_corr];
-%set(gca,'DataAspectRatio',[1 1 1])
+
+
+
+
+set(gca,'DataAspectRatio',DataAspect)
 
 disp(['Gradient vector: (' num2str(sumx) ' ' num2str(sumy) ' ' num2str(sumz_corr) ')'])
